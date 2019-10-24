@@ -1,0 +1,26 @@
+---
+- hosts: localhost
+  name: test1
+  gather_facts: False
+  vars_files:
+    - /app/creds.yaml
+  module_defaults:
+    group/k8s:
+      host: "{{ openshift_host }}"
+
+  tasks:
+  - name: Test Information
+    debug:
+      msg: "{{ item }}"
+    loop:
+      - "Ansible: {{ ansible_version.string }}"
+      - "K8S_AUTH_VERIFY_SSL: {{ lookup('env','K8S_AUTH_VERIFY_SSL') }}" 
+      - "Test: {{ ansible_play_name}} {{ username }}@{{ openshift_host }}"
+      - "Expect Cert Verify Failure: Tests if ENV variable is functioning as expected"
+
+  - name: Log in
+    k8s_auth:
+      username: "{{ username }}"
+      password: "{{ password }}"
+    register: k8s_auth_results 
+    no_log: false

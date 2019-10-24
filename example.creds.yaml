@@ -1,0 +1,4 @@
+---
+openshift_host: "https://openshift.example.com:8443"
+username: "admin"
+password: "password"
