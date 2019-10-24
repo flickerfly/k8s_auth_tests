@@ -18,4 +18,5 @@ ENTRYPOINT ["ansible-playbook","-v"]
 COPY *.yaml /app/
 
 # We're using self-signed certificates
-ENV K8S_AUTH_VERIFY_SSL=no
+ENV K8S_AUTH_VERIFY_SSL False
+#ENV ANSIBLE_HOST_KEY_CHECKING False

@@ -1,0 +1,57 @@
+---
+- hosts: localhost
+  name: test5
+  gather_facts: False
+  vars_files:
+    - /app/creds.yaml
+  module_defaults:
+    group/k8s:
+      host: "{{ openshift_host }}"
+      validate_certs: no
+
+  tasks:
+  - name: Test Information
+    debug:
+      msg: "{{ item }}"
+    loop:
+      - "Ansible: {{ ansible_version.string }}"
+      - "K8S_AUTH_VERIFY_SSL: {{ lookup('env','K8S_AUTH_VERIFY_SSL') }}" 
+      - "Test: {{ ansible_play_name}}"
+      - "Tests if module_defaults:validate_certs is functioning as expected on k8s creation"
+
+  - name: Log in
+    k8s_auth:
+      username: "{{ username }}"
+      password: "{{ password }}"
+    register: k8s_auth_results
+    no_log: true
+
+  - name: Create Route
+    k8s:
+      api_key: "{{ k8s_auth_results.k8s_auth.api_key }}"
+      definition:
+        apiVersion: v1
+        kind: Route
+        metadata:
+          name: testing-ansible
+          namespace: default
+        spec:
+          to:
+            name: nothing
+    no_log: true
+
+  - name: Destroy Route
+    k8s:
+      api_key: "{{ k8s_auth_results.k8s_auth.api_key }}"
+      state: absent
+      definition:
+        apiVersion: v1
+        kind: Route
+        metadata:
+          name: testing-ansible
+          namespace: default
+        spec:
+          to:
+            name: nothing
+    no_log: true
+
