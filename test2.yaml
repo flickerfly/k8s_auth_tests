@@ -7,6 +7,7 @@
   module_defaults:
     group/k8s:
       host: "{{ openshift_host }}"
+      validate_certs: no
 
   tasks:
   - name: Test Information
@@ -23,4 +24,4 @@
       username: "{{ username }}"
       password: "{{ password }}"
     register: k8s_auth_results 
-    no_log: false
+    no_log: true
