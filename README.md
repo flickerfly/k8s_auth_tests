@@ -22,10 +22,10 @@ Run this in the repo root to run a test (where # is a number):
 [test1.yaml](test1.yaml) - [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed
  - Only uses the ENV variable to permit self-signed certs: K8S_AUTH_VERIFY_SSL shows "False" in debug output, but still tries to verify.
 
-# Successes
-[test2.yaml](test2.yaml) - Uses `validate_certs: no` in module_defaults
-[test3.yaml](test3.yaml) - Uses `validate_certs: no` in task
-[test4.yaml](test4.yaml) - Like test2, but with k8s_facts lookup task
-[test5.yaml](test5.yaml) - Like test2, but with k8s route creation & deletion task
-[test6.yaml](test6.yaml) - Uses a code block
+## Successes
+* [test2.yaml](test2.yaml) - Uses `validate_certs: no` in module_defaults
+* [test3.yaml](test3.yaml) - Uses `validate_certs: no` in task
+* [test4.yaml](test4.yaml) - Like test2, but with k8s_facts lookup task
+* [test5.yaml](test5.yaml) - Like test2, but with k8s route creation & deletion task
+* [test6.yaml](test6.yaml) - Uses a code block
 
